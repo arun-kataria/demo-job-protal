@@ -8,65 +8,83 @@ import StarBorderIcon from "@mui/icons-material/StarBorder";
 import ForkRightIcon from "@mui/icons-material/ForkRight";
 import CircleIcon from "@mui/icons-material/Circle";
 import Link from "@mui/material/Link";
+import { Box } from "@mui/material";
 
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
   },
+  components: {
+    MuiCardContent: {
+      styleOverrides: {
+        root: {
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+        },
+      },
+    },
+  },
 });
 
 const RepositoryCard = ({ repo }) => {
   return (
-    <Card sx={{ backgroundColor: "background.default", color: "text.primary" }}>
-      <CardContent>
-        <Typography variant="h5" component="div">
-          <Link href={repo.link} color="inherit" underline="hover">
-            {repo.name}
+    <Card
+      sx={{
+        backgroundColor: "background.default",
+        color: "text.primary",
+        height: "100%",
+      }}
+    >
+      <CardContent sx={{ flexGrow: 1 }}>
+        <Typography gutterBottom variant="h6" component="div" noWrap>
+          <Link href={repo.item.link} color="inherit" underline="hover">
+            {repo.item.name}
           </Link>
         </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          {repo.description}
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{
+            display: "-webkit-box",
+            overflow: "hidden",
+            WebkitBoxOrient: "vertical",
+            WebkitLineClamp: 3,
+            mb: 2,
+          }}
+        >
+          {repo.item.description}
         </Typography>
-        <Chip
-          icon={<CircleIcon style={{ color: repo.languageColor }} />}
-          label={repo.language}
-          variant="outlined"
-          size="small"
-        />
-        <Chip
-          icon={<StarBorderIcon />}
-          label={`${repo.stars}k`}
-          variant="outlined"
-          size="small"
-          sx={{ ml: 1 }}
-        />
-        <Chip
-          icon={<ForkRightIcon />}
-          label={`${repo.forks}k`}
-          variant="outlined"
-          size="small"
-          sx={{ ml: 1 }}
-        />
+        {/* Chips */}
+        <Box sx={{ display: "flex", gap: 1 }}>
+          <Chip
+            icon={<CircleIcon style={{ color: repo.item.languageColor }} />}
+            label={repo.item.language}
+            variant="outlined"
+            size="small"
+          />
+          <Chip
+            icon={<StarBorderIcon />}
+            label={`${repo.item.stargazers_count}k`}
+            variant="outlined"
+            size="small"
+          />
+          <Chip
+            icon={<ForkRightIcon />}
+            label={`${repo.item.forks_count}k`}
+            variant="outlined"
+            size="small"
+          />
+        </Box>
       </CardContent>
     </Card>
   );
 };
 
-// Example usage:
-const repoData = {
-  name: "Insurance repo",
-  description: "Easy to maintain open source documentation websites.",
-  language: "TypeScript",
-  languageColor: "#3178c6", // Color value for TypeScript as an example
-  stars: "51.2",
-  forks: "7.9",
-  link: "https://github.com/facebook/docusaurus",
-};
-
-export default function GithubCard() {
+export default function GithubCard(item) {
   return (
     <ThemeProvider theme={darkTheme}>
-      <RepositoryCard repo={repoData} />
+      <RepositoryCard repo={item} />
     </ThemeProvider>
   );
 }

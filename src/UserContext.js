@@ -6,6 +6,10 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
+    if (user) localStorage.setItem("user", JSON.stringify(user));
+  }, [user]);
+
+  useEffect(() => {
     const storedData = localStorage.getItem("user");
     const data = storedData ? JSON.parse(storedData) : null;
     if (data) setUser(data);

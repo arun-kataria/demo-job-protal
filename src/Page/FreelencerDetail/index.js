@@ -17,6 +17,8 @@ import { useParams } from "react-router-dom";
 import { Box, Grid } from "@mui/material";
 import GithubCard from "../../Elements/GithubCard";
 import Paper from "@mui/material/Paper";
+import { useUser } from "../../UserContext";
+import { USER_TYPE } from "../../Config/constant";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -37,16 +39,32 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function FeelencerDetail() {
   const { id } = useParams();
+  const { user } = useUser();
   console.log("id:", id);
   const [expanded, setExpanded] = React.useState(false);
+  const [repoArray, setRepoArray] = React.useState([]);
+
+  const fetchRepo = (gitUserName) => {
+    fetch(`https://api.github.com/users/${gitUserName}/repos`)
+      .then((re) => re.json())
+      .then((rep) => {
+        setRepoArray(rep);
+      });
+  };
+
+  React.useEffect(() => {
+    if (user && user.type === USER_TYPE[1]) {
+      fetchRepo(user.gitUserName);
+    }
+  }, [user]);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
   return (
-    <Box sx={{ p: 2, pt: 5 }}>
-      <Card>
+    <Box sx={{ mb: 4 }}>
+      <Card sx={{ m: 2 }}>
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
@@ -127,20 +145,20 @@ export default function FeelencerDetail() {
         <Grid item xs={12}>
           <Box
             sx={{
-              p: 2,
+              pr: 2,
               borderRadius: 2,
               bgcolor: "background.default",
               display: "grid",
               gridTemplateColumns: {
-                lg: "1fr 1fr 1fr 1fr",
-                md: "1fr 1fr 1fr",
+                lg: "1fr 1fr 1fr",
+                md: "1fr 1fr",
               },
               gap: 2,
             }}
           >
-            {[...new Array(5)].map((_, index) => (
-              <Item key={index} elevation={6}>
-                <GithubCard />
+            {repoArray.map((item) => (
+              <Item key={item.id} elevation={6}>
+                <GithubCard item={item} />
               </Item>
             ))}
           </Box>

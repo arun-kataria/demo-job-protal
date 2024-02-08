@@ -34,6 +34,7 @@ export default function Header() {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -99,7 +100,14 @@ export default function Header() {
                 "aria-labelledby": "basic-button",
               }}
             >
-              <MenuItem onClick={handleClose}>My Profile</MenuItem>
+              <MenuItem
+                onClick={() => {
+                  navigate(ROUTE.PROFILE);
+                  handleClose();
+                }}
+              >
+                My Profile
+              </MenuItem>
               <MenuItem onClick={logoutHandler}>Logout</MenuItem>
             </Menu>
           </>

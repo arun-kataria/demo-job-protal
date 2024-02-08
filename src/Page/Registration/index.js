@@ -72,6 +72,7 @@ export default function Registration() {
         emailId,
         password,
         name,
+        gitUserName,
         type: USER_TYPE[value],
       };
       console.log("body - ", body);
@@ -87,7 +88,7 @@ export default function Registration() {
       const jsonData = await response.json();
       console.log("response: ", jsonData.message);
     },
-    [name, emailId, value, password]
+    [name, emailId, value, password, gitUserName]
   );
 
   const registrationForm = React.useCallback(() => {
