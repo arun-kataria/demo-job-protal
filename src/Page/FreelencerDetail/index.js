@@ -122,6 +122,9 @@ export default function FeelencerDetail() {
       </Card>
       <Grid container spacing={2}>
         <Grid item xs={12}>
+          <Typography sx={{ mt: 4, ml: 2 }}>Repositry</Typography>
+        </Grid>
+        <Grid item xs={12}>
           <Box
             sx={{
               p: 2,

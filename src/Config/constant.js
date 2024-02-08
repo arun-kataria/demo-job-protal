@@ -1,7 +1,9 @@
 const ROUTE = {
-  REGISTRATION: "/registration",
-  EMPLOYER: "/employer",
+  REGISTRATION: "registration",
+  EMPLOYER: "employer",
   DETAIL: "detail/:id",
+  FREELENCER: "freelencer",
+  PROFILE: "profile",
 };
 
 export const URL = {

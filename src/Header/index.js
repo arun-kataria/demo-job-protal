@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -18,7 +18,6 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useTheme } from "@mui/material/styles";
-import LoginDialog from "../Dialogs/LoginDialog";
 import { useNavigate } from "react-router-dom";
 import ROUTE from "../Config/constant";
 import { useUser } from "../UserContext";
@@ -29,7 +28,6 @@ export default function Header() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [showLoginDialog, setLoginDialog] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
@@ -42,13 +40,10 @@ export default function Header() {
 
   const logoutHandler = () => {
     setUser(null);
+    setAnchorEl(null);
     localStorage.removeItem("user");
     navigate("/");
   };
-
-  const loginHandler = useCallback(() => {
-    setLoginDialog(!showLoginDialog);
-  }, [showLoginDialog]);
 
   const toggleDrawer = (open) => (event) => {
     if (
@@ -69,11 +64,6 @@ export default function Header() {
     >
       <List>
         <ListItem disablePadding>
-          <ListItemButton onClick={loginHandler}>
-            <ListItemText primary="Login" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
           <ListItemButton>
             <ListItemText primary="Registration" />
           </ListItemButton>
@@ -83,8 +73,6 @@ export default function Header() {
   );
   return (
     <AppBar position="fixed">
-      <LoginDialog handler={loginHandler} isOpen={showLoginDialog} />
-
       <Toolbar>
         {user ? (
           <>
@@ -147,9 +135,6 @@ export default function Header() {
               </Drawer>
             ) : (
               <>
-                <Button color="inherit" onClick={loginHandler}>
-                  Login
-                </Button>
                 <Button
                   color="inherit"
                   onClick={() => navigate(ROUTE.REGISTRATION)}

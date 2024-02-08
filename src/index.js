@@ -6,7 +6,9 @@ import reportWebVitals from "./reportWebVitals";
 import { worker } from "./mocks/setup-msw";
 
 // Start the worker
-worker.start();
+worker.start({
+  onUnhandledRequest: "bypass",
+});
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

@@ -54,7 +54,8 @@ export default function Registration() {
   const [emailId, setEmailId] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
-  const [emailError, setEmailError] = React.useState(false); // State to track email validation error
+  const [emailError, setEmailError] = React.useState(false);
+  const [gitUserName, setGitUserName] = React.useState("");
 
   const handleChange = (e, newValue) => {
     setValue(newValue);
@@ -110,6 +111,15 @@ export default function Registration() {
           fullWidth
           margin="normal"
         />
+        {value ? (
+          <TextField
+            label="Github User Name"
+            value={gitUserName}
+            onChange={(e) => setGitUserName(e.target.value)}
+            fullWidth
+            margin="normal"
+          />
+        ) : null}
         <TextField
           label="EmailId"
           value={emailId}
@@ -152,6 +162,7 @@ export default function Registration() {
     confirmPassword,
     emailError,
     submitHandler,
+    gitUserName,
   ]);
 
   return (

@@ -1,28 +1,24 @@
 import * as React from "react";
 import {
   Button,
-  Dialog,
-  DialogActions,
-  Slide,
-  DialogContent,
-  DialogTitle,
+  Container,
   TextField,
+  Typography,
+  Box,
+  Grid,
+  CircularProgress,
 } from "@mui/material";
-import ROUTE, { URL, USER_TYPE } from "../Config/constant";
-import CircularProgressBar from "../Elements/CircularProgressBar";
-import { useUser } from "../UserContext";
+import { useUser } from "../../UserContext";
 import { useNavigate } from "react-router-dom";
+import ROUTE, { URL, USER_TYPE } from "../../Config/constant";
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
-
-export default function LoginDialog({ handler, isOpen }) {
+export default function LoginPage() {
   const navigate = useNavigate();
   const { setUser } = useUser();
   const [emailId, setEmailId] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [isLoader, setIsLoader] = React.useState(false);
+
   const submitHandler = async (e) => {
     e.preventDefault();
     setIsLoader(true);
@@ -47,71 +43,80 @@ export default function LoginDialog({ handler, isOpen }) {
       localStorage.setItem("user", JSON.stringify(jsonData.data));
       if (jsonData.data && jsonData.data.type === USER_TYPE[0]) {
         navigate(ROUTE.EMPLOYER);
+      } else {
+        console.log("re--", ROUTE.FREELENCER);
+        navigate(ROUTE.FREELENCER);
       }
       setUser(jsonData.data);
-      handler();
     } catch (error) {
       console.log("Error: ", error);
     } finally {
       setIsLoader(false);
     }
   };
+
   return (
-    <React.Fragment>
-      <Dialog
-        open={isOpen}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={handler}
-        aria-describedby="alert-dialog-slide-description"
+    <Container component="main" maxWidth="xs">
+      <Box
+        sx={{
+          marginTop: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
       >
-        <DialogTitle sx={{ textAlign: "center" }}>Login</DialogTitle>
-        <DialogContent>
+        <Typography component="h1" variant="h5">
+          Sign in
+        </Typography>
+        <Box
+          component="form"
+          onSubmit={submitHandler}
+          noValidate
+          sx={{ mt: 1 }}
+        >
           <TextField
-            autoFocus
+            margin="normal"
             required
-            margin="dense"
-            id="email"
-            name="email"
-            label="Email ID"
-            type="email"
             fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            autoFocus
             value={emailId}
             onChange={(e) => setEmailId(e.target.value)}
-            variant="standard"
           />
           <TextField
-            autoFocus
+            margin="normal"
             required
-            margin="dense"
-            id="password"
-            name="Password"
-            label="Password"
-            type="Password"
             fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            variant="standard"
           />
-        </DialogContent>
-        <DialogActions>
-          {isLoader ? (
-            <CircularProgressBar />
-          ) : (
-            <>
-              <Button onClick={submitHandler}>Submit</Button>
-              <Button
-                onClick={() => {
-                  setPassword("");
-                  setEmailId("");
-                }}
-              >
-                Clear
-              </Button>
-            </>
-          )}
-        </DialogActions>
-      </Dialog>
-    </React.Fragment>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            disabled={isLoader}
+          >
+            {isLoader ? <CircularProgress size={24} /> : "Sign In"}
+          </Button>
+          <Grid container>
+            <Grid item xs>
+              {/* Link to reset password or additional actions */}
+            </Grid>
+            <Grid item>
+              {/* Link to registration page or additional actions */}
+            </Grid>
+          </Grid>
+        </Box>
+      </Box>
+    </Container>
   );
 }
