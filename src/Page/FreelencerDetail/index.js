@@ -13,12 +13,12 @@ import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { useParams } from "react-router-dom";
-import { Box, Grid } from "@mui/material";
+import { useNavigate, useParams } from "react-router-dom";
+import { Box, Button, Grid } from "@mui/material";
 import GithubCard from "../../Elements/GithubCard";
 import Paper from "@mui/material/Paper";
 import { useUser } from "../../UserContext";
-import { USER_TYPE } from "../../Config/constant";
+import ROUTE from "../../Config/constant";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -40,6 +40,7 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function FeelencerDetail() {
   const { id } = useParams();
   const { user } = useUser();
+  const navigate = useNavigate();
   console.log("id:", id);
   const [expanded, setExpanded] = React.useState(false);
   const [repoArray, setRepoArray] = React.useState([]);
@@ -53,9 +54,7 @@ export default function FeelencerDetail() {
   };
 
   React.useEffect(() => {
-    if (user && user.type === USER_TYPE[1]) {
-      fetchRepo(user.gitUserName);
-    }
+    fetchRepo(user.gitUserName ? user.gitUserName : "arun-kataria");
   }, [user]);
 
   const handleExpandClick = () => {
@@ -64,6 +63,13 @@ export default function FeelencerDetail() {
 
   return (
     <Box sx={{ mb: 4 }}>
+      <Button
+        variant="contained"
+        sx={{ position: "fixed", right: 30, top: 100 }}
+        onClick={() => navigate(ROUTE.JOB_LIST)}
+      >
+        Apply on jobs
+      </Button>
       <Card sx={{ m: 2 }}>
         <CardHeader
           avatar={

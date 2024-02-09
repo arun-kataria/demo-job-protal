@@ -27,6 +27,8 @@ const AppRoutes = () => {
       <Route path={ROUTE.EMPLOYER} element={<Employer />} />
       <Route path={ROUTE.DETAIL} element={<FeelencerDetail />} />
       <Route path={ROUTE.FREELENCER} element={<FeelencerDetail />} />
+      <Route path={ROUTE.FREELENCER} element={<FeelencerDetail />} />
+      <Route path={ROUTE.JOB_LIST} element={<Employer />} />
     </Routes>
   );
 };

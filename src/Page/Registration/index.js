@@ -13,6 +13,7 @@ import {
 import { URL, USER_TYPE } from "../../Config/constant";
 import { handlers } from "../../mocks/handlers";
 import { worker } from "../../mocks/setup-msw";
+import { useNavigate } from "react-router-dom";
 worker.use(...handlers);
 
 function TabPanel(props) {
@@ -49,6 +50,7 @@ function a11yProps(index) {
 }
 export default function Registration() {
   const theme = useTheme();
+  const navigate = useNavigate();
   const [value, setValue] = React.useState(0);
   const [name, setName] = React.useState("");
   const [emailId, setEmailId] = React.useState("");
@@ -87,8 +89,9 @@ export default function Registration() {
       });
       const jsonData = await response.json();
       console.log("response: ", jsonData.message);
+      navigate("/");
     },
-    [name, emailId, value, password, gitUserName]
+    [name, emailId, value, password, gitUserName, navigate]
   );
 
   const registrationForm = React.useCallback(() => {
