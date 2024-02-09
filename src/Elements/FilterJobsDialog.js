@@ -26,7 +26,6 @@ const MenuProps = {
   },
 };
 
-// Assume this comes from a constant or similar
 const allTags = ["java", "javascript", "HTML", "CSS"];
 
 function FilterJobsDialog({ open, handleClose, applyFilters }) {
@@ -86,6 +85,7 @@ function FilterJobsDialog({ open, handleClose, applyFilters }) {
         <FormControl fullWidth>
           <InputLabel>Tags</InputLabel>
           <Select
+            data-testid="tags-select"
             multiple
             value={selectedTags}
             onChange={handleTagChange}

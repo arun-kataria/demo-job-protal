@@ -39,13 +39,12 @@ export default function JobCard({ item, updateJobs }) {
     }
 
     const result = await response.json();
-    console.log("success: ", result);
-
+    ///console.log("success: ", result);
     updateJobs();
   };
 
   const applyButton = () => {
-    if (user.type === USER_TYPE[1]) {
+    if (user && user.type === USER_TYPE[1]) {
       if (item.leadCount.includes(user.userId)) {
         return (
           <Button size="small" variant="contained" color="success" disabled>
