@@ -38,10 +38,9 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function FeelencerDetail() {
-  const { id } = useParams();
+  //const { id } = useParams();
   const { user } = useUser();
   const navigate = useNavigate();
-  console.log("id:", id);
   const [expanded, setExpanded] = React.useState(false);
   const [repoArray, setRepoArray] = React.useState([]);
 

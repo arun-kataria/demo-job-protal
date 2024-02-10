@@ -26,7 +26,6 @@ export default function LoginPage() {
       emailId,
       password,
     };
-    console.log("body - ", body);
     try {
       const response = await fetch(URL.LOGIN_API, {
         method: "POST",
@@ -39,12 +38,10 @@ export default function LoginPage() {
       if (!response.ok) {
         throw new Error(jsonData.error || "User not authorized");
       }
-      console.log("response: ", jsonData.message);
       localStorage.setItem("user", JSON.stringify(jsonData.data));
       if (jsonData.data && jsonData.data.type === USER_TYPE[0]) {
         navigate(ROUTE.EMPLOYER);
       } else {
-        console.log("re--", ROUTE.FREELENCER);
         navigate(ROUTE.FREELENCER);
       }
       setUser(jsonData.data);

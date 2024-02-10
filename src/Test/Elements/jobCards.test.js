@@ -70,6 +70,7 @@ it('handles "Apply" button click correctly', async () => {
     fireEvent.click(applyButton);
 
     await waitFor(() =>
+      // eslint-disable-next-line jest/no-conditional-expect
       expect(fetch).toHaveBeenCalledWith(
         URL.APPLY_JOB, // Expected URL
         {
@@ -83,6 +84,7 @@ it('handles "Apply" button click correctly', async () => {
       )
     );
 
+    // eslint-disable-next-line jest/no-conditional-expect
     await waitFor(() => expect(mockUpdateJobs).toHaveBeenCalled());
   } else {
     console.error("Apply button not found in the document.");
