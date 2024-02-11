@@ -1,11 +1,11 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import ProfilePage from "../../../Page/Profile";
+import ProfilePage from ".";
 import { BrowserRouter as Router } from "react-router-dom";
 import { act } from "react-dom/test-utils";
 
 // Mock the useUser hook within UserContext
-jest.mock("../../../UserContext", () => ({
+jest.mock("../../UserContext", () => ({
   useUser: jest.fn(),
 }));
 
@@ -20,7 +20,7 @@ const mockUser = {
 
 describe("ProfilePage", () => {
   beforeEach(() => {
-    require("../../../UserContext").useUser.mockReturnValue({
+    require("../../UserContext").useUser.mockReturnValue({
       user: mockUser,
       setUser: mockSetUser,
     });

@@ -1,7 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import GithubCard from "../../Elements/GithubCard";
-import "@testing-library/jest-dom";
+import GithubCard from "./GithubCard";
 
 describe("GithubCard", () => {
   const mockRepo = {

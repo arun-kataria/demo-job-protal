@@ -2,21 +2,21 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import AppRoutes from "../../AppRouters";
+import AppRoutes from ".";
 // Import the module to mock it
-import * as UserContext from "../../UserContext";
+import * as UserContext from "../UserContext";
 
 // Mock the pages to simplify testing
-jest.mock("../../Page/Registration", () => () => <div>Registration Page</div>);
-jest.mock("../../Page/Employer", () => () => <div>Employer Page</div>);
-jest.mock("../../Page/FreelencerDetail", () => () => (
+jest.mock("../Page/Registration", () => () => <div>Registration Page</div>);
+jest.mock("../Page/Employer", () => () => <div>Employer Page</div>);
+jest.mock("../Page/FreelencerDetail", () => () => (
   <div>Freelancer Detail Page</div>
 ));
-jest.mock("../../Page/Login", () => () => <div>Login Page</div>);
-jest.mock("../../Page/Profile", () => () => <div>Profile Page</div>);
+jest.mock("../Page/Login", () => () => <div>Login Page</div>);
+jest.mock("../Page/Profile", () => () => <div>Profile Page</div>);
 
 // Correct way to mock useUser hook
-jest.mock("../../UserContext", () => ({
+jest.mock("../UserContext", () => ({
   useUser: jest.fn(),
 }));
 

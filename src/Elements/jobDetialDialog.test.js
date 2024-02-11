@@ -1,6 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import JobDetailDialog from "../../Elements/jobDetialDialog";
-import "@testing-library/jest-dom";
+import JobDetailDialog from "./jobDetialDialog";
 
 const mockHandleClose = jest.fn();
 

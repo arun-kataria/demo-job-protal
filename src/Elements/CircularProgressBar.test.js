@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import CircularProgressBar from "../../Elements/CircularProgressBar";
+import CircularProgressBar from "./CircularProgressBar";
 
 describe("CircularProgressBar", () => {
   it("renders a CircularProgress component", () => {

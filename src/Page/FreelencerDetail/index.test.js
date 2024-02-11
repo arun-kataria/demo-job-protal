@@ -1,8 +1,8 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
-import FeelencerDetail from "../../../Page/FreelencerDetail";
-import * as UserContext from "../../../UserContext";
+import FeelencerDetail from ".";
+import * as UserContext from "../../UserContext";
 import { act } from "react-dom/test-utils";
 
 describe("FeelencerDetail", () => {

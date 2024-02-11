@@ -1,12 +1,12 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import Employer from "../../../Page/Employer";
-import * as UserContext from "../../../UserContext";
+import Employer from ".";
+import * as UserContext from "../../UserContext";
 import { BrowserRouter as Router } from "react-router-dom";
 import { act } from "react-dom/test-utils";
 
-jest.mock("../../../UserContext", () => ({
+jest.mock("../../UserContext", () => ({
   useUser: jest.fn(),
 }));
 

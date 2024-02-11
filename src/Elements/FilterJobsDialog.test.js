@@ -1,7 +1,7 @@
 import React from "react";
 import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import FilterJobsDialog from "../../Elements/FilterJobsDialog"; // Ensure the path is correct
+import FilterJobsDialog from "./FilterJobsDialog"; // Ensure the path is correct
 
 describe("FilterJobsDialog", () => {
   const mockHandleClose = jest.fn();

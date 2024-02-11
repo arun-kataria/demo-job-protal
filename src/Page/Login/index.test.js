@@ -1,13 +1,13 @@
 import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import LoginPage from "../../../Page/Login";
-import * as UserContext from "../../../UserContext";
-import { MemoryRouter, useNavigate } from "react-router-dom";
-import ROUTE, { USER_TYPE } from "../../../Config/constant";
+import LoginPage from ".";
+import * as UserContext from "../../UserContext";
+import { MemoryRouter } from "react-router-dom";
+import ROUTE, { USER_TYPE } from "../../Config/constant";
 
 // Mocks
-jest.mock("../../../UserContext", () => ({
+jest.mock("../../UserContext", () => ({
   useUser: jest.fn().mockReturnValue({
     setUser: jest.fn(),
   }),

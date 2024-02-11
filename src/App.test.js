@@ -1,15 +1,15 @@
 // src/App.test.js
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import App from "../App";
-import { UserProvider, useUser } from "../UserContext";
+import App from "./App";
+import { UserProvider, useUser } from "./UserContext";
 // Mock the Header and AppRoutes components
-jest.mock("../Header", () => () => (
+jest.mock("./Header", () => () => (
   <div>
     <a href="/mocked-path">Mocked Header</a>
   </div>
 ));
-jest.mock("../AppRouters", () => () => <div>Mocked AppRoutes</div>);
+jest.mock("./AppRouters", () => () => <div>Mocked AppRoutes</div>);
 const MockUserConsumer = () => {
   const { user } = useUser();
   return <div>Current User: {user ? user.name : "No User"}</div>;

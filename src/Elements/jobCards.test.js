@@ -1,10 +1,9 @@
 import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import "@testing-library/jest-dom";
-import JobCard from "../../Elements/jobCards";
-import { UserProvider } from "../../UserContext";
-import * as UserContextModule from "../../UserContext"; // Ensure correct import path
-import { URL } from "../../Config/constant";
+import JobCard from "./jobCards";
+import { UserProvider } from "../UserContext";
+import * as UserContextModule from "../UserContext";
+import { URL } from "../Config/constant";
 
 // Define mock data outside of the test block
 const mockUpdateJobs = jest.fn();
@@ -23,7 +22,7 @@ const mockUser = {
 
 // Setup the mock for useUser hook before each test
 beforeEach(() => {
-  jest.mock("../../UserContext", () => ({
+  jest.mock("../UserContext", () => ({
     ...jest.requireActual("../../UserContext"), // This assumes there are other exports you might want to use as-is
     useUser: jest.fn().mockReturnValue({
       user: { userId: "2", type: "freelencer" },

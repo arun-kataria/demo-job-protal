@@ -1,6 +1,6 @@
 import { render, fireEvent, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import CreateJobDialog from "../../../Page/Employer/createJobDialog";
+import CreateJobDialog from "./createJobDialog";
 
 describe("CreateJobDialog", () => {
   const handleClose = jest.fn();
