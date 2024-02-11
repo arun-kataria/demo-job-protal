@@ -24,6 +24,7 @@ describe("FeelencerDetail", () => {
   });
 
   it("renders user information correctly", async () => {
+    // eslint-disable-next-line testing-library/no-unnecessary-act
     await act(async () => {
       render(
         <BrowserRouter>
@@ -36,16 +37,15 @@ describe("FeelencerDetail", () => {
     expect(screen.getByText("Arun Kataria")).toBeInTheDocument();
 
     await act(async () => {
-      await waitFor(() => {
-        expect(global.fetch).toHaveBeenCalledWith(
-          "https://api.github.com/users/test-user/repos"
-        );
-        expect(screen.getByText("Repo 1")).toBeInTheDocument();
-      });
+      expect(global.fetch).toHaveBeenCalledWith(
+        "https://api.github.com/users/test-user/repos"
+      );
+      expect(screen.getByText("Repo 1")).toBeInTheDocument();
     });
   });
 
   it("expands additional information on click", async () => {
+    // eslint-disable-next-line testing-library/no-unnecessary-act
     await act(async () => {
       render(
         <BrowserRouter>
@@ -54,10 +54,12 @@ describe("FeelencerDetail", () => {
       );
     });
 
+    // eslint-disable-next-line testing-library/no-unnecessary-act
     await act(async () => {
       fireEvent.click(screen.getByLabelText("show more"));
     });
 
+    // eslint-disable-next-line testing-library/no-unnecessary-act
     await act(async () => {
       await waitFor(() => {
         expect(screen.getByText("About:")).toBeVisible();
