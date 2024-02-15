@@ -8,7 +8,7 @@ describe("GithubCard", () => {
       link: "https://github.com/sample/repo",
       name: "sample/repo",
       description: "This is a sample repository",
-      language: "JavaScript",
+      language: "Java",
       languageColor: "#f1e05a",
       stargazers_count: 1.2,
       forks_count: 0.8,

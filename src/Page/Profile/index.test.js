@@ -4,7 +4,6 @@ import ProfilePage from ".";
 import { BrowserRouter as Router } from "react-router-dom";
 import { act } from "react-dom/test-utils";
 
-// Mock the useUser hook within UserContext
 jest.mock("../../UserContext", () => ({
   useUser: jest.fn(),
 }));

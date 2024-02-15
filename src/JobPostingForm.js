@@ -36,7 +36,6 @@ export default function JobForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Prepare form data to be submitted
     const formData = {
       companyName,
       contactInfo,
@@ -46,7 +45,6 @@ export default function JobForm() {
       document,
     };
     console.log(formData);
-    // Submit formData here
   };
 
   return (

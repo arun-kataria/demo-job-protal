@@ -87,11 +87,13 @@ export default function Header() {
               Logo
             </Typography>{" "}
             <Avatar
+              data-testid="avatar"
               src="/broken-image.jpg"
               onClick={handleClick}
               sx={{ cursor: "pointer" }}
             />
             <Menu
+              data-testid="header-menu"
               id="basic-menu"
               anchorEl={anchorEl}
               open={open}

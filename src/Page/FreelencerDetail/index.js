@@ -13,7 +13,7 @@ import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Box, Button, Grid } from "@mui/material";
 import GithubCard from "../../Elements/GithubCard";
 import Paper from "@mui/material/Paper";
@@ -43,12 +43,17 @@ export default function FeelencerDetail() {
   const navigate = useNavigate();
   const [expanded, setExpanded] = React.useState(false);
   const [repoArray, setRepoArray] = React.useState([]);
+  const [error, setError] = React.useState(false);
 
   const fetchRepo = (gitUserName) => {
     fetch(`https://api.github.com/users/${gitUserName}/repos`)
       .then((re) => re.json())
       .then((rep) => {
         setRepoArray(rep);
+        setError(false);
+      })
+      .catch((e) => {
+        setError(true);
       });
   };
 
@@ -166,6 +171,7 @@ export default function FeelencerDetail() {
                 <GithubCard item={item} />
               </Item>
             ))}
+            {error ? <Box>Opps something went wrong</Box> : null}
           </Box>
         </Grid>
       </Grid>

@@ -1,7 +1,7 @@
 import React from "react";
 import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import FilterJobsDialog from "./FilterJobsDialog"; // Ensure the path is correct
+import FilterJobsDialog from "./FilterJobsDialog";
 
 describe("FilterJobsDialog", () => {
   const mockHandleClose = jest.fn();
@@ -58,5 +58,31 @@ describe("FilterJobsDialog", () => {
 
     expect(minSalaryInput).toHaveValue(10);
     expect(maxSalaryInput).toHaveValue(100);
+  });
+
+  it("handles tag selection correctly", async () => {
+    render(
+      <FilterJobsDialog
+        open={true}
+        handleClose={mockHandleClose}
+        applyFilters={mockApplyFilters}
+      />
+    );
+
+    await act(async () => {
+      await userEvent.click(screen.getByRole("combobox"));
+    });
+    await act(async () => {
+      await userEvent.click(screen.getByText("javascript"));
+      await userEvent.click(screen.getByText("HTML"));
+    });
+
+    const chipJavascript = screen.getByText("javascript");
+    const dropdownOptions = await screen.findAllByRole("option", {
+      name: "HTML",
+    });
+    expect(dropdownOptions).toHaveLength(1);
+
+    expect(chipJavascript).toBeInTheDocument();
   });
 });

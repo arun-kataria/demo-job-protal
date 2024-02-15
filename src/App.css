@@ -36,3 +36,14 @@
     transform: rotate(360deg);
   }
 }
+
+.myTable-cell{
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: center;
+  cursor: pointer;
+}
+
+.myTable-cell:hover{
+  background-color: aqua;
+}

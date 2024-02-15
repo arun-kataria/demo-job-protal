@@ -68,7 +68,7 @@ const CreateJobDialog = ({ open, handleClose }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(dataToSend), // Convert the object to JSON string
+        body: JSON.stringify(dataToSend),
       });
 
       if (!response.ok) {
@@ -76,8 +76,8 @@ const CreateJobDialog = ({ open, handleClose }) => {
       }
 
       const result = await response.json();
-      console.log(result); // Handle success
-      handleClose(); // Close dialog on success
+      console.log(result);
+      handleClose();
     } catch (error) {
       console.error("Error creating job:", error);
     }
@@ -123,11 +123,11 @@ const CreateJobDialog = ({ open, handleClose }) => {
           <TextField
             fullWidth
             placeholder="Add tags"
-            value={newTag} // Set value to newTag state
-            onChange={(e) => setNewTag(e.target.value)} // Update newTag state on change
+            value={newTag}
+            onChange={(e) => setNewTag(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                e.preventDefault(); // Prevent form submission on Enter key
+                e.preventDefault();
                 handleTagAdd();
               }
             }}
@@ -138,8 +138,8 @@ const CreateJobDialog = ({ open, handleClose }) => {
           spacing={1}
           marginTop={1}
           sx={{
-            maxHeight: formData.tags.length > 6 ? 100 : "auto", // Set a maxHeight for scrollable behavior
-            overflow: "auto", // Enable scrolling
+            maxHeight: formData.tags.length > 6 ? 100 : "auto",
+            overflow: "auto",
           }}
         >
           {formData.tags.map((tag, index) => (

@@ -49,12 +49,6 @@
     "workerDirectory": "public"
   },
   "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx,ts,tsx}",
-      "!src/index.js",
-      "!src/reportWebVitals.js",
-      "!src/setupTests.js"
-    ],
     "coverageThreshold": {
       "global": {
         "branches": 50,

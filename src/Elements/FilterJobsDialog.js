@@ -45,10 +45,21 @@ function FilterJobsDialog({ open, handleClose, applyFilters }) {
     const {
       target: { value },
     } = event;
-    setSelectedTags(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
+    setSelectedTags(typeof value === "string" ? value.split(",") : value);
+  };
+
+  const handleResetFilters = () => {
+    setMinSalary("");
+    setMaxSalary("");
+    setSelectedTags([]);
+
+    applyFilters({
+      minSalary: "",
+      maxSalary: "",
+      selectedTags: [],
+    });
+
+    handleClose();
   };
 
   const handleApplyFilters = () => {
@@ -110,6 +121,9 @@ function FilterJobsDialog({ open, handleClose, applyFilters }) {
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
         <Button onClick={handleApplyFilters}>Apply Filters</Button>
+        <Button onClick={handleResetFilters} color="secondary">
+          Reset Filters
+        </Button>
       </DialogActions>
     </Dialog>
   );

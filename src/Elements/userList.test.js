@@ -1,8 +1,8 @@
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import UserList from "./userList";
+import UserList from "../Elements/userList";
 
-describe("UserList", () => {
+describe("UserList Component", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     global.open = jest.fn();

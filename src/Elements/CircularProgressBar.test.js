@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import CircularProgressBar from "./CircularProgressBar";
 
 describe("CircularProgressBar", () => {
-  it("renders a CircularProgress component", () => {
+  it("renders a CircularProgress component in screen", () => {
     render(<CircularProgressBar />);
     const progress = screen.getByRole("progressbar");
     expect(progress).toBeInTheDocument();

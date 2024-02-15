@@ -5,8 +5,8 @@ import {
   TextField,
   Typography,
   Box,
-  Grid,
   CircularProgress,
+  Snackbar,
 } from "@mui/material";
 import { useUser } from "../../UserContext";
 import { useNavigate } from "react-router-dom";
@@ -19,8 +19,32 @@ export default function LoginPage() {
   const [password, setPassword] = React.useState("");
   const [isLoader, setIsLoader] = React.useState(false);
 
+  const [isEmailValid, setIsEmailValid] = React.useState(false);
+  const [isPasswordValid, setIsPasswordValid] = React.useState(false);
+
+  const [openState, setOpenState] = React.useState(false);
+
+  const validateEmail = (email) => /\S+@\S+\.\S+/.test(email);
+  const validatePassword = (password) => password.length >= 6;
+
+  const handleEmailChange = (e) => {
+    const email = e.target.value;
+    setEmailId(email);
+    setIsEmailValid(validateEmail(email));
+  };
+
+  const handlePasswordChange = (e) => {
+    const password = e.target.value;
+    setPassword(password);
+    setIsPasswordValid(validatePassword(password));
+  };
+
   const submitHandler = async (e) => {
     e.preventDefault();
+    if (!isEmailValid || !isPasswordValid) {
+      console.log("Invalid email or password");
+      return;
+    }
     setIsLoader(true);
     const body = {
       emailId,
@@ -36,6 +60,7 @@ export default function LoginPage() {
       });
       const jsonData = await response.json();
       if (!response.ok) {
+        setOpenState(true);
         throw new Error(jsonData.error || "User not authorized");
       }
       localStorage.setItem("user", JSON.stringify(jsonData.data));
@@ -54,6 +79,14 @@ export default function LoginPage() {
 
   return (
     <Container component="main" maxWidth="xs">
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        open={openState}
+        onClose={() => {
+          setOpenState(false);
+        }}
+        message="Invalid Credintial"
+      />
       <Box
         sx={{
           marginTop: 8,
@@ -80,8 +113,10 @@ export default function LoginPage() {
             name="email"
             autoComplete="email"
             autoFocus
+            error={!isEmailValid && emailId !== ""}
             value={emailId}
-            onChange={(e) => setEmailId(e.target.value)}
+            onChange={handleEmailChange}
+            helperText={!isEmailValid && emailId !== "" ? "Invalid Email" : ""}
           />
           <TextField
             margin="normal"
@@ -92,26 +127,24 @@ export default function LoginPage() {
             type="password"
             id="password"
             autoComplete="current-password"
+            error={!isPasswordValid && password !== ""}
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handlePasswordChange}
+            helperText={
+              !isPasswordValid && password !== ""
+                ? "Password must be at least 6 characters"
+                : ""
+            }
           />
           <Button
             type="submit"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
-            disabled={isLoader}
+            disabled={!isEmailValid || !isPasswordValid || isLoader}
           >
             {isLoader ? <CircularProgress size={24} /> : "Sign In"}
           </Button>
-          <Grid container>
-            <Grid item xs>
-              {/* Link to reset password or additional actions */}
-            </Grid>
-            <Grid item>
-              {/* Link to registration page or additional actions */}
-            </Grid>
-          </Grid>
         </Box>
       </Box>
     </Container>

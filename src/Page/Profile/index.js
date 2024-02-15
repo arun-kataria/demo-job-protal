@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, TextField, Button, Grid, Typography } from "@mui/material";
 import { useUser } from "../../UserContext";
+import { USER_TYPE } from "../../Config/constant";
 
 export default function ProfilePage() {
   const { user, setUser } = useUser();
@@ -8,6 +9,7 @@ export default function ProfilePage() {
   const [profile, setProfile] = useState(null);
 
   useEffect(() => {
+    console.log("user==", user);
     setProfile(user);
   }, [user]);
 
@@ -52,6 +54,19 @@ export default function ProfilePage() {
               onChange={handleChange}
             />
           </Grid>
+          {profile.type === USER_TYPE[1] ? (
+            <Grid item xs={12}>
+              <TextField
+                label="Git userName"
+                variant="outlined"
+                fullWidth
+                disabled={!isEditing}
+                name="email"
+                value={profile.gitUserName}
+                onChange={handleChange}
+              />
+            </Grid>
+          ) : null}
           <Grid item xs={12}>
             <TextField
               label="Password"

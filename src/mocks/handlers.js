@@ -39,7 +39,6 @@ export const handlers = [
     const skip = parseInt(req.url.searchParams.get("skip") || "0", 10);
     const limit = parseInt(req.url.searchParams.get("limit") || "10", 10);
 
-    // Adjusted parsing logic for minSalary and maxSalary
     const minSalaryParam = req.url.searchParams.get("minSalary");
     const maxSalaryParam = req.url.searchParams.get("maxSalary");
     const minSalary =
@@ -51,15 +50,13 @@ export const handlers = [
         ? parseInt(maxSalaryParam, 10)
         : null;
 
-    // Adjusted parsing logic for tags
     const tagsParam = req.url.searchParams.get("tags");
     const tags = tagsParam && tagsParam !== "" ? tagsParam.split(",") : [];
 
     const storedData = localStorage.getItem("jobsList");
     const allJobs = storedData ? JSON.parse(storedData) : [];
 
-    // Apply filters only if parameters are validly provided
-    const filteredJobs = allJobs.filter((job) => {
+    const filteredJobs = allJobs.reverse().filter((job) => {
       const salaryWithinRange =
         (minSalary !== null ? job.salaryPerHour >= minSalary : true) &&
         (maxSalary !== null ? job.salaryPerHour <= maxSalary : true);
@@ -114,10 +111,8 @@ export const handlers = [
     const storedJobs = localStorage.getItem("jobsList");
     const jobs = storedJobs ? JSON.parse(storedJobs) : [];
 
-    // Find the job with the given itemId
     const jobIndex = jobs.findIndex((job) => job.id === itemId);
     if (jobIndex !== -1) {
-      // Job found
       const job = jobs[jobIndex];
 
       if (!job.leadCount.includes(userId)) {

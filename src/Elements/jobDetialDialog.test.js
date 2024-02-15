@@ -21,7 +21,7 @@ describe("JobDetailDialog", () => {
     expect(screen.queryByText(mockItem.title)).not.toBeInTheDocument();
   });
 
-  it("displays the item details correctly", () => {
+  it("displays item details correctly", () => {
     render(
       <JobDetailDialog
         open={true}

@@ -11,10 +11,7 @@ import {
   TextField,
 } from "@mui/material";
 import { URL, USER_TYPE } from "../../Config/constant";
-import { handlers } from "../../mocks/handlers";
-import { worker } from "../../mocks/setup-msw";
 import { useNavigate } from "react-router-dom";
-worker.use(...handlers);
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -58,12 +55,33 @@ export default function Registration() {
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const [emailError, setEmailError] = React.useState(false);
   const [gitUserName, setGitUserName] = React.useState("");
+  const [formValid, setFormValid] = React.useState(false);
 
   const handleChange = (e, newValue) => {
     setValue(newValue);
   };
+
+  const validateForm = React.useCallback(() => {
+    const isEmailValid = emailId.includes("@") && emailId.includes(".");
+    const isNameValid = name.trim().length > 0;
+    const isPasswordValid = password.length >= 3;
+    const isConfirmPasswordValid = confirmPassword === password;
+    const isGitUserNameValid = value ? gitUserName.trim().length > 0 : true;
+
+    setFormValid(
+      isEmailValid &&
+        isNameValid &&
+        isPasswordValid &&
+        isConfirmPasswordValid &&
+        isGitUserNameValid
+    );
+  }, [emailId, name, password, confirmPassword, gitUserName, value]);
+
+  React.useEffect(() => {
+    validateForm();
+  }, [validateForm]);
+
   const validateEmail = (email) => {
-    // Regular expression to validate email format
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
   };
@@ -153,7 +171,12 @@ export default function Registration() {
           margin="normal"
         />
 
-        <Button type="submit" variant="contained" sx={{ mt: 2 }}>
+        <Button
+          type="submit"
+          variant="contained"
+          sx={{ mt: 2 }}
+          disabled={!formValid}
+        >
           Submit
         </Button>
       </Box>
@@ -167,6 +190,7 @@ export default function Registration() {
     emailError,
     submitHandler,
     gitUserName,
+    formValid,
   ]);
 
   return (

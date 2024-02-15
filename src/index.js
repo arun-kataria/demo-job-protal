@@ -5,7 +5,6 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { worker } from "./mocks/setup-msw";
 
-// Start the worker
 worker.start({
   onUnhandledRequest: "bypass",
 });

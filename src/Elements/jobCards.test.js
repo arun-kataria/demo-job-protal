@@ -5,7 +5,6 @@ import { UserProvider } from "../UserContext";
 import * as UserContextModule from "../UserContext";
 import { URL } from "../Config/constant";
 
-// Define mock data outside of the test block
 const mockUpdateJobs = jest.fn();
 const mockItem = {
   id: "1",
@@ -20,10 +19,9 @@ const mockUser = {
   type: "freelancer",
 };
 
-// Setup the mock for useUser hook before each test
 beforeEach(() => {
   jest.mock("../UserContext", () => ({
-    ...jest.requireActual("../../UserContext"), // This assumes there are other exports you might want to use as-is
+    ...jest.requireActual("../../UserContext"),
     useUser: jest.fn().mockReturnValue({
       user: { userId: "2", type: "freelencer" },
     }),
@@ -34,11 +32,10 @@ beforeEach(() => {
   });
 });
 afterEach(() => {
-  jest.restoreAllMocks(); // Restores `fetch` to its original state
+  jest.restoreAllMocks();
 });
 
 it('shows "Apply" button when user has not applied', () => {
-  // Mock implementation specific to this test
   jest.spyOn(UserContextModule, "useUser").mockReturnValue({
     user: { userId: "2", type: "freelencer" },
   });
@@ -49,8 +46,7 @@ it('shows "Apply" button when user has not applied', () => {
     </UserProvider>
   );
 
-  // Assuming the "Apply" button text is exactly "Apply" and it should be rendered
-  const applyButton = screen.getByRole("button", { name: "Apply" }); // Using getByRole for better practice
+  const applyButton = screen.getByRole("button", { name: "Apply" });
   expect(applyButton).toBeInTheDocument();
 });
 
@@ -70,17 +66,14 @@ it('handles "Apply" button click correctly', async () => {
 
     await waitFor(() =>
       // eslint-disable-next-line jest/no-conditional-expect
-      expect(fetch).toHaveBeenCalledWith(
-        URL.APPLY_JOB, // Expected URL
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            userId: "2", // Assuming this userId is from your mocked user
-            itemId: "1", // Assuming this is the itemId from mockItem
-          }),
-        }
-      )
+      expect(fetch).toHaveBeenCalledWith(URL.APPLY_JOB, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: "2",
+          itemId: "1",
+        }),
+      })
     );
 
     // eslint-disable-next-line jest/no-conditional-expect

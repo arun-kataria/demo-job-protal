@@ -31,16 +31,16 @@ export default function JobCard({ item, updateJobs }) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ userId, itemId }), // Convert the object to JSON string
+      body: JSON.stringify({ userId, itemId }),
     });
 
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
 
-    const result = await response.json();
+    await response.json();
     ///console.log("success: ", result);
-    updateJobs();
+    updateJobs(userId, itemId);
   };
 
   const applyButton = () => {

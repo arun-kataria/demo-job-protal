@@ -43,7 +43,6 @@ export default function Employer() {
   const applyFilters = (filterValues) => {
     console.log("filterValues", filterValues);
     setFilters(filterValues);
-    // Reset job data and pagination
     setJobsData([]);
     setSkip(0);
   };
@@ -59,19 +58,28 @@ export default function Employer() {
       const loadedJobs = response.data;
 
       setJobsData((prevJobsData) => [...prevJobsData, ...loadedJobs]);
-      if (skip + limit >= totalJobs) {
-        setHasMoreJobs(false);
-      }
+
+      setHasMoreJobs(skip + limit >= totalJobs ? false : true);
     } catch (error) {
       console.log("error--", error);
     }
   }, [skip, filters]);
 
-  const updateJobs = useCallback(() => {
-    setOpenSnackBar(true);
-    fetchData();
-    setJobsData([]);
-  }, [fetchData]);
+  const updateJobs = useCallback(
+    (userId, itemId) => {
+      setOpenSnackBar(true);
+
+      let copy = JSON.parse(JSON.stringify(jobsData));
+      copy = copy.map((item) => {
+        if (item.id === itemId) {
+          item.leadCount.push(userId);
+        }
+        return item;
+      });
+      setJobsData(copy);
+    },
+    [jobsData]
+  );
 
   useEffect(() => {
     fetchData();
@@ -117,22 +125,24 @@ export default function Employer() {
           <Typography variant="h6" component="div" sx={{ textAlign: "center" }}>
             Jobs List
           </Typography>
-          {user && user.type === USER_TYPE[0] ? (
+          <Box sx={{ display: "flex", gap: 1 }}>
             <Button
               variant="contained"
-              onClick={() => setOpenCreateJobDialog(true)}
+              startIcon={<FilterListIcon />}
+              onClick={() => setOpenFilterDialog(true)}
+              size="small"
             >
-              Create Job
+              Filter
             </Button>
-          ) : null}
-          <Button
-            variant="contained"
-            startIcon={<FilterListIcon />}
-            onClick={() => setOpenFilterDialog(true)}
-            size="small"
-          >
-            Filter
-          </Button>
+            {user && user.type === USER_TYPE[0] ? (
+              <Button
+                variant="contained"
+                onClick={() => setOpenCreateJobDialog(true)}
+              >
+                Create Job
+              </Button>
+            ) : null}
+          </Box>
         </Box>
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -154,6 +164,15 @@ export default function Employer() {
                   <JobCards item={item} updateJobs={updateJobs} />
                 </Item>
               ))}
+
+              {jobsData.length === 0 && !hasMoreJobs && (
+                <Typography
+                  sx={{ textAlign: "center", width: "100%" }}
+                  variant="subtitle1"
+                >
+                  Data Not Found
+                </Typography>
+              )}
             </Box>
             {hasMoreJobs && (
               <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
